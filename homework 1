@@ -1,0 +1,227 @@
+import 'package:flutter/material.dart';
+
+void main(){
+
+  runApp(
+    const MaterialApp(
+      home: Page1(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
+}
+
+class Page1 extends StatelessWidget {
+  const Page1({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("COMP-2430-SDE"),
+      ),
+        body: Center(
+          child:
+            ElevatedButton(
+                onPressed: (){
+                  Navigator.of(context).push(_createRoute());
+                },
+                child: const Text('GO!'),
+              style: ButtonStyle(
+                textStyle: MaterialStateProperty.all(
+                  TextStyle(
+                    fontSize: 50
+                  )
+                ),
+                    foregroundColor: MaterialStateProperty.resolveWith((states) {
+                      if(states.contains(MaterialState.pressed)){
+                        return Colors.black;
+                      }
+                      return Colors.white;
+                    }),
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+            if(states.contains(MaterialState.pressed)){
+            return Colors.blueGrey;
+            }
+            return Colors.blue;
+            }),
+                shadowColor: MaterialStateProperty.all(Colors.blueAccent),
+                  elevation: MaterialStateProperty.all(10),
+                side:MaterialStateProperty.all(
+                  BorderSide(
+                    color: Colors.white,
+                    width: 1,
+                  )
+                ),
+                shape: MaterialStateProperty.all(
+                  CircleBorder(
+                    side: BorderSide(
+                      color: Colors.white10,
+                      width:1,
+                    )
+                  )
+                ),
+                minimumSize: MaterialStateProperty.all(Size(150,150)),
+                overlayColor: MaterialStateProperty.all(Colors.blueAccent),
+              ),
+            ),
+        ),
+    );
+  }
+}
+Route _createRoute(){
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const Page2(),
+    transitionsBuilder: (context,animation, secondaryAnimatioin,child){
+      return child;
+    },
+  );
+}
+class Page2 extends StatelessWidget{
+  const Page2({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Image.asset('images/pic1.png'),
+          Text('sausage dog'),
+          Image.asset('images/pic-2.png'),
+          Text('Burritos dog'),
+          Image.asset('images/pic-3.png'),
+          Text('bread dog'),
+          Image.asset('images/pic-4.png'),
+          Text('baguette dog'),
+
+        ElevatedButton(
+          onPressed: (){
+            Navigator.of(context).push(_createRoute1());
+          },
+          child: const Text('buy!'),
+        ),
+      ],
+      ),
+
+
+    );
+  }
+}
+
+Route _createRoute1(){
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const calculatepage(),
+    transitionsBuilder: (context,animation, secondaryAnimatioin,child){
+      return child;
+    },
+  );
+}
+
+class calculatepage extends StatefulWidget {
+  const calculatepage({Key? key}) : super(key: key);
+
+  @override
+  State<calculatepage> createState() => calculatepageState();
+}
+
+class calculatepageState extends State<calculatepage> {
+  var number1=0, number2 =0, number3 =0, number4= 0,total=0;
+  final TextEditingController text1 = TextEditingController(text:"0");
+  final TextEditingController text2 = TextEditingController(text:"0");
+  final TextEditingController text3 = TextEditingController(text:"0");
+  final TextEditingController text4 = TextEditingController(text:"0");
+  void doAddition(){
+    setState(() {
+      number1 = int.parse(text1.text);
+      number2 = int.parse(text2.text);
+      number3 = int.parse(text3.text);
+      number4 = int.parse(text4.text);
+      total = number1+number2+number3+number4;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        child: Column(
+          children: [
+
+            Text('sausage dog',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.italic,
+              ),),
+            TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    hintText: 'how many?',
+                ),
+              controller:text1,
+            ),
+            Text('Burritos dog',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.italic,),),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'how many?'
+              ),
+              controller:text2,
+            ),
+            Text('bread dog',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.italic,),),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'how many?'
+              ),
+              controller:text3,
+            ),
+            Text('baguette dog',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.italic,),),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'how many?'
+              ),
+              controller:text4,
+            ),
+
+            Text('total number is :$total',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.italic,),),
+
+              Row(
+                children: <Widget>[
+                  MaterialButton(
+                    child:const Text("done"),
+                    color: Colors.green,
+                    onPressed: doAddition,
+                  ),
+                ],
+              ),
+
+
+          ],
+        )
+    );
+  }
+}
+
